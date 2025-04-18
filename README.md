@@ -1,30 +1,61 @@
-# Next.js Graphing Calculator
+🧮 Next.js Graphing Calculator
+A modern, interactive graphing calculator built with Next.js, featuring real-time plotting, custom expressions, and a sleek UI. Inspired by Desmos, this app brings math visualization to the web with speed and style.
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+🚀 Features
+📈 Real-time Graphing of functions like y = sin(x), y = x^2, etc.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/addhyan888s-projects/v0-next-js-graphing-calculator)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/WZTVYkXmrS8)
+🎨 Multiple Graph Support — plot and visualize multiple expressions simultaneously
 
-## Overview
+⚙️ Customizable Appearance — change colors, zoom, pan, and grid visibility
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+🧠 Math Expression Parsing with math.js
 
-## Deployment
+⚡ Built using Next.js, React, Charting/Canvas Library (e.g., react-chartjs-2, canvas, or plotly)
 
-Your project is live at:
+🌙 Dark Mode Support
 
-**[https://vercel.com/addhyan888s-projects/v0-next-js-graphing-calculator](https://vercel.com/addhyan888s-projects/v0-next-js-graphing-calculator)**
+🖼️ Preview
+![image](https://github.com/user-attachments/assets/1640e846-aaac-4c80-a1a4-f83bb832a256)
 
-## Build your app
+🛠️ Tech Stack
+Next.js
 
-Continue building your app on:
+React
 
-**[https://v0.dev/chat/projects/WZTVYkXmrS8](https://v0.dev/chat/projects/WZTVYkXmrS8)**
+math.js
 
-## How It Works
+[Charting Library] (e.g., Chart.js, Plotly, etc.)
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+Tailwind CSS / CSS Modules (depending on your setup)
+
+📦 Installation
+git clone https://github.com/your-username/nextjs-graphing-calc.git
+cd nextjs-graphing-calc
+npm install
+npm run dev
+
+✍️ Usage
+Enter functions in the input box (e.g., y = sin(x), y = x^3 + 2x)
+
+Use zoom controls or mouse gestures to explore the graph
+
+📂 Folder Structure
+/pages         → Next.js pages
+/components    → Reusable UI components (Graph, InputBar, etc.)
+/utils         → Expression parsing, validation helpers
+/public        → Static assets
+
+🧪 Coming Soon
+🧮 Parametric and Polar Graphing
+
+📐 Measurement Tools
+
+🧭 Coordinate Tracing
+
+💾 Save/Load Graphs
+
+🙌 Contributing
+Pull requests are welcome! If you have suggestions or spot bugs, open an issue or fork the project.
+
+📜 License
+MIT
