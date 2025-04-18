@@ -29,7 +29,7 @@ math.js
 Tailwind CSS / CSS Modules (depending on your setup)
 
 📦 Installation
-git clone https://github.com/your-username/nextjs-graphing-calc.git
+git clone https://github.com/Addhyan888/nextjs-graphing-calculator.git
 cd nextjs-graphing-calc
 npm install
 npm run dev
