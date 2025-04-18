@@ -15,18 +15,18 @@ export default function LinkedListSignature() {
   const [nodes, setNodes] = useState<Node[]>([
     { id: 1, content: "Made" },
     { id: 2, content: "by" },
-    { id: 3, content: "addhyan" },
+    { id: 3, content: "α ∂ ∂ ħ γ α η" },
     {
       id: 4,
       content: (
         <div className="flex space-x-2">
-          <Link href="https://github.com/addhyan" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <Link href="https://github.com/addhyan888" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <Github className="h-4 w-4" />
           </Link>
-          <Link href="https://linkedin.com/in/addhyan" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <Link href="https://linkedin.com/in/addhyan-awasthi-99a07630a" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
             <Linkedin className="h-4 w-4" />
           </Link>
-          <Link href="https://twitter.com/addhyan" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+          <Link href="https://twitter.com/7_addhyan" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
             <Twitter className="h-4 w-4" />
           </Link>
         </div>

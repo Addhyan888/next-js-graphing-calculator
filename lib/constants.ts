@@ -50,6 +50,14 @@ export const colorSchemes = {
   monochrome: ["#000000", "#333333", "#666666", "#999999", "#cccccc", "#f2f2f2"],
 }
 
+// Accessible color schemes for better readability and color vision deficiency support
+export const accessibleColorSchemes = {
+  default: ["#0072B2", "#E69F00", "#009E73", "#CC79A7", "#56B4E9", "#D55E00", "#F0E442", "#999999"],
+  contrast: ["#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"],
+  pastel: ["#66C2A5", "#FC8D62", "#8DA0CB", "#E78AC3", "#A6D854", "#FFD92F", "#E5C494", "#B3B3B3"],
+  vibrant: ["#0077BB", "#EE7733", "#33BBEE", "#EE3377", "#009988", "#BBBBBB", "#000000"],
+}
+
 // 3D material options
 export const materialOptions = [
   { label: "Normal", value: "normal" },

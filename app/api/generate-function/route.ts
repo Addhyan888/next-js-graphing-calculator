@@ -25,59 +25,33 @@ export async function POST(req: NextRequest) {
     let apiResponse
 
     try {
-      if (model === "grok") {
-        // Use Grok API
-        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.XAI_API_KEY}`,
-          },
-          body: JSON.stringify({
-            model: "grok-1",
-            messages: [
-              { role: "system", content: systemPrompt },
-              { role: "user", content: prompt },
-            ],
-            temperature: 0.7,
-            max_tokens: 100,
-          }),
-        })
+      // Use Groq API
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "llama3-70b-8192",
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: prompt },
+          ],
+          temperature: 0.7,
+          max_tokens: 100,
+        }),
+        // Add timeout to prevent hanging requests
+        signal: AbortSignal.timeout(10000), // 10 second timeout
+      })
 
-        if (!response.ok) {
-          const errorText = await response.text()
-          console.error("Grok API error:", errorText)
-          throw new Error(`Grok API error: ${response.status} ${response.statusText}`)
-        }
-
-        apiResponse = await response.json()
-      } else {
-        // Use Groq API
-        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-          },
-          body: JSON.stringify({
-            model: "llama3-70b-8192",
-            messages: [
-              { role: "system", content: systemPrompt },
-              { role: "user", content: prompt },
-            ],
-            temperature: 0.7,
-            max_tokens: 100,
-          }),
-        })
-
-        if (!response.ok) {
-          const errorText = await response.text()
-          console.error("Groq API error:", errorText)
-          throw new Error(`Groq API error: ${response.status} ${response.statusText}`)
-        }
-
-        apiResponse = await response.json()
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error("Groq API error:", errorText)
+        throw new Error(`Groq API error: ${response.status} ${response.statusText}`)
       }
+
+      apiResponse = await response.json()
 
       // Validate API response structure
       if (!apiResponse || !apiResponse.choices || !apiResponse.choices[0] || !apiResponse.choices[0].message) {
@@ -100,7 +74,7 @@ export async function POST(req: NextRequest) {
 
       return NextResponse.json({
         expression: fallbackExpression,
-        error: "Could not generate function with AI. Using fallback expression instead.",
+        error: `Could not generate function with AI: ${apiError instanceof Error ? apiError.message : "Unknown error"}. Using fallback expression instead.`,
       })
     }
   } catch (error) {
@@ -108,9 +82,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         expression: "x",
-        error: "Failed to process request. Using simple function instead.",
+        error: `Failed to process request: ${error instanceof Error ? error.message : "Unknown error"}. Using simple function instead.`,
       },
-      { status: 200 },
-    ) // Return 200 with fallback to prevent client-side errors
+      { status: 200 }, // Return 200 with fallback to prevent client-side errors
+    )
   }
 }

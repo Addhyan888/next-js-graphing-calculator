@@ -18,7 +18,7 @@ export default function AIFunctionGenerator({ onAddFunction }: AIFunctionGenerat
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState("")
   const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<"grok" | "groq">("grok")
+  const [activeTab, setActiveTab] = useState<"groq">("groq")
   const [dimension, setDimension] = useState<"2d" | "3d">("2d")
 
   const handleGenerate = async () => {
@@ -41,7 +41,21 @@ export default function AIFunctionGenerator({ onAddFunction }: AIFunctionGenerat
         }),
       })
 
-      const data = await response.json()
+      // Check if response is ok before trying to parse JSON
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error("API error:", errorText)
+        throw new Error(`API error: ${response.status} ${response.statusText}`)
+      }
+
+      // Try to parse the JSON response
+      let data
+      try {
+        data = await response.json()
+      } catch (jsonError) {
+        console.error("JSON parsing error:", jsonError)
+        throw new Error("Failed to parse API response")
+      }
 
       if (data.error) {
         setError(data.error)
@@ -54,8 +68,11 @@ export default function AIFunctionGenerator({ onAddFunction }: AIFunctionGenerat
       }
     } catch (error) {
       console.error("Error generating function:", error)
-      setError("Error generating function. Please try again.")
-      setResult(dimension === "2d" ? "Math.sin(x)" : "Math.sin(x) * Math.cos(y)")
+      setError(`Error generating function: ${error instanceof Error ? error.message : "Unknown error"}`)
+
+      // Provide a fallback expression based on the dimension
+      const fallbackExpression = dimension === "2d" ? "Math.sin(x)" : "Math.sin(x) * Math.cos(y)"
+      setResult(fallbackExpression)
     } finally {
       setLoading(false)
     }
@@ -82,21 +99,31 @@ export default function AIFunctionGenerator({ onAddFunction }: AIFunctionGenerat
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "grok" | "groq")}>
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="grok">
-              <div className="flex items-center gap-2">
-                <Bot className="h-4 w-4" />
-                Grok
-              </div>
-            </TabsTrigger>
-            <TabsTrigger value="groq">
-              <div className="flex items-center gap-2">
-                <Bot className="h-4 w-4" />
-                Groq
-              </div>
-            </TabsTrigger>
-          </TabsList>
+        <Tabs value="groq" onValueChange={(value) => setActiveTab(value as "groq")}>
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <TabsList className="w-full bg-gradient-to-r from-purple-500/10 to-cyan-500/10 p-1 rounded-lg">
+              <motion.div className="w-full" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <TabsTrigger value="groq" className="w-full">
+                  <div className="flex items-center justify-center gap-2 py-1">
+                    <motion.div
+                      initial={{ rotate: 0 }}
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 2, ease: "linear", repeat: Number.POSITIVE_INFINITY, repeatType: "loop" }}
+                    >
+                      <Bot className="h-4 w-4 text-purple-500" />
+                    </motion.div>
+                    <span className="font-medium bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-cyan-500">
+                      Groq AI
+                    </span>
+                  </div>
+                </TabsTrigger>
+              </motion.div>
+            </TabsList>
+          </motion.div>
 
           <div className="mt-4 space-y-4">
             <div className="flex items-center space-x-2">
